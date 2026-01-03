@@ -1,9 +1,9 @@
 const { pool } = require('../config/db');
 
-async function InsertTask(taskData){
+async function insertTask(taskData){
     const query = `Insert into tasks (title,description,status) values ($1,$2,$3) RETURNING *;`;
-    const taskData = [title,description,status];
-    const results = await pool.query(query,taskData);
+    const { title, description, status } = taskData;
+    const results = await pool.query(query,[title,description,status]);
     return results.rows[0];
 }
 
@@ -33,7 +33,7 @@ async function deleteTask(id){
 }
 
 module.exports = {
-    InsertTask,
+    insertTask,
     getAllTasks,
     getTaskById,
     updateTask,
